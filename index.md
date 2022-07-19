@@ -1014,9 +1014,11 @@ https://segmentfault.com/a/1190000021199728
 
 ### CAP
 
-C：一致性 A：可用性 P：分区容错性
+C（Consistency）：一致性；A（Availability）：可用性；P（Partition tolerance）：分区容错性
 
 
 
-# 
+### BASE
+
+BA（Basically Available）：基本可用；S（Soft State）：软状态；E（Eventually Consistent）：最终一致
 
