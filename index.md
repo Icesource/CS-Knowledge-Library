@@ -670,7 +670,7 @@ Pull会产生时延，无法保证消息一到Broker就立刻消费
 
 Pull执行频率问题
 
-**long-polling** 长轮询，Consumer发起pull请求后，Broker建立长连接持有这个请求一段时间，如果这段时间内有消息到了，就立刻返回给Consumer消费
+**long-polling** 长轮询，Consumer发起pull请求后，Broker接收到请求后会持有这个请求一段时间，如果这段时间内有消息到了，就立刻返回给Consumer消费，如果这段时间没有消息到，等到时间超时后Broker也会返回一个响应给Consumer，Consumer接收到这个响应后会再发起pull请求。
 
 
 
