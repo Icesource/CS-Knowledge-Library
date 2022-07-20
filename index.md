@@ -1022,3 +1022,21 @@ C（Consistency）：一致性；A（Availability）：可用性；P（Partition
 
 BA（Basically Available）：基本可用；S（Soft State）：软状态；E（Eventually Consistent）：最终一致
 
+
+
+
+
+### 时间轮
+
+时间轮是定时任务的一种常用实现方式。
+
+时间轮是一个环形结构，可以用时钟来类比，例如时钟上的秒刻度，每一个秒刻度都是一个 bucket，bucket 中保存着该时间需要执行的所有任务（list），当时钟的秒针移动到某一个秒刻度是将所有任务取出执行。
+
+不过有个缺点是时间轮的大小有限，比如例子中的秒针最大是60秒，无法保存一个大于该时间的任务，例如一个任务是61秒执行，这个时候的解决办法可以将61秒的任务保存在1秒的 bucket 中，当秒针到达1秒的刻度是不执行该任务，而是转一圈之后再次到达1秒的刻度时再执行，相当于秒针运行了61秒，除了这个方法还可以用层级时间轮的方式。层级时间轮也可以使用时钟做类比，首先在上面秒钟时间轮的基础上增加分钟时间轮，任务在添加进时间轮时首先判断是添加进秒钟时间轮还是分钟时间轮，上面的任务61秒执行已经大于秒钟时间轮的大小，这个时候添加进分钟时间轮的 1 分钟刻度中，当分钟时间轮的指针到达该刻度时将该刻度所有的人放入秒钟时间轮中等待调度。如果分钟时间轮仍然无法满足还可以添加小时时间轮等。对于添加的时间轮一个 bucket 的刻度都是上一个时间轮的大小。例如分钟时间轮的 bucket 的刻度是上一个时间轮秒钟时间轮的60秒大小。
+
+
+
+[netty/HashedWheelTimer.java at 4.1 · netty/netty (github.com)](https://github.com/netty/netty/blob/4.1/common/src/main/java/io/netty/util/HashedWheelTimer.java)
+
+[Kafka解惑之时间轮（TimingWheel）_朱小厮的博客-CSDN博客_kafka时间轮](https://blog.csdn.net/u013256816/article/details/80697456)
+
